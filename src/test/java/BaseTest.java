@@ -19,6 +19,11 @@ public class BaseTest {
     @AfterTest
     @Description("Browser's tear down")
     public void tearDown() {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         driver.quit();
     }
 
