@@ -6,6 +6,8 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.logging.Logger;
 
 public class BasePage {
@@ -16,12 +18,12 @@ public class BasePage {
     public BasePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
-        WebDriverWait wait = new WebDriverWait(driver, 40);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
     }
 
     protected void waitForElementToBeClickable(WebElement element) {
         try {
-            new WebDriverWait(driver, TIMEOUT).until(ExpectedConditions.elementToBeClickable(element));
+            new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.elementToBeClickable(element));
         } catch (WebDriverException e) {
             throw new WebDriverException("Element is not clickable");
         }
@@ -49,7 +51,7 @@ public class BasePage {
         ExpectedCondition<Boolean> pageLoadCondition = driver -> (boolean) ((JavascriptExecutor) driver)
                 .executeScript("return document.readyState == 'complete'");
         try {
-            new WebDriverWait(driver, TIMEOUT).until(pageLoadCondition);
+            new WebDriverWait(driver, Duration.ofSeconds(30)).until(pageLoadCondition);
         } catch (WebDriverException e) {
             throw new WebDriverException("Page is not loaded");
         }
@@ -57,7 +59,7 @@ public class BasePage {
 
     protected void waitForElementToBeVisible(WebElement element) {
         try {
-            new WebDriverWait(driver, TIMEOUT).until(ExpectedConditions.visibilityOf(element));
+            new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.visibilityOf(element));
         } catch (WebDriverException e) {
             throw new WebDriverException("Element is not visible");
         }
@@ -68,7 +70,7 @@ public class BasePage {
         ExpectedCondition<Boolean> pageLoadCondition = driver -> (boolean) ((JavascriptExecutor) driver)
                 .executeScript("return window.jQuery == undefined ? true : window.jQuery.active == 0");
         try {
-            new WebDriverWait(driver, TIMEOUT).until(pageLoadCondition);
+            new WebDriverWait(driver, Duration.ofSeconds(30)).until(pageLoadCondition);
         } catch (WebDriverException e) {
             throw new WebDriverException("Page is not loaded");
         }
@@ -97,7 +99,7 @@ public class BasePage {
     }
 
     protected void click(WebElement element) {
-        new WebDriverWait(driver, TIMEOUT).until(ExpectedConditions.elementToBeClickable(element));
+        new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.elementToBeClickable(element));
         highlightElement(element);
         element.click();
         logger.info("Element " + element.getText() + " is clicking...");
